@@ -52,7 +52,7 @@ public class BlackJack {
 
     JFrame frame;
     JPanel gamePanel, buttonPanel;
-    JButton hitButton, stayButton;
+    JButton hitButton, stayButton, restartButton;
 
     public BlackJack(int screenSize) {
         borderHeight = borderWidth = screenSize;
@@ -121,7 +121,7 @@ public class BlackJack {
         buttonPanel = new JPanel();
         hitButton = new JButton("Hit");
         stayButton = new JButton("Stay");
-
+        restartButton = new JButton("Restart");
     }
 
     private void buildDeck() {
@@ -186,6 +186,8 @@ public class BlackJack {
         buttonPanel.add(hitButton);
         stayButton.setFocusable(false);
         buttonPanel.add(stayButton);
+        restartButton.setFocusable(false);
+        buttonPanel.add(restartButton);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         hitButton.addActionListener(new ActionListener() {
@@ -215,6 +217,12 @@ public class BlackJack {
             }
         });
 
+        restartButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                resetGame();
+            }
+        });
+
         gamePanel.repaint();
     }
 
@@ -232,5 +240,14 @@ public class BlackJack {
             playerAceCount -= 1;
         }
         return playerSum;
+    }
+
+    private void resetGame() {
+        buildDeck();
+        shuffleDeck();
+        startMatch();
+        hitButton.setEnabled(true);
+        stayButton.setEnabled(true);
+        gamePanel.repaint();
     }
 }
